@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Outlet,useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
+import DataObjectIcon from '@mui/icons-material/DataObject';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -45,7 +46,8 @@ function Layout() {
     <AppBar position="fixed" sx={{ width: '100%' }}>
       <Container maxWidth="100%">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <DataObjectIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          
           <Typography
             variant="h6"
             noWrap
@@ -112,6 +114,12 @@ function Layout() {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Users
+              </Button>
+              <Button
+                onClick={() => navigate('/login')}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Login
               </Button>
 
           </Box>
