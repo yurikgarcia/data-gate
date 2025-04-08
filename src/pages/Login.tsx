@@ -18,7 +18,7 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Logging in with:", { email, password });
-    navigate("/home"); // Redirect to home after login
+    navigate("/"); // Redirect to home after login
     // TODO: Hook into auth system here (Supabase, API call, etc.)
   };
 
