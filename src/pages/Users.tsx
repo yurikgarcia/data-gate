@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAppSelector } from "../store";
 import { DataGrid } from "@mui/x-data-grid";
+import AddUser from "../components/AddUser";
 import Box from "@mui/material/Box";
 
 // Define the User type
@@ -35,6 +36,9 @@ export default function Users() {
     fetchUsers();
   }, []);
 
+  //import addUser 
+
+
   return (
     <Box
       sx={{
@@ -44,6 +48,7 @@ export default function Users() {
         height: "75vh",
       }}
     >
+  
       <Box
         sx={{
           height: "70vh",
@@ -53,8 +58,13 @@ export default function Users() {
           },
         }}
       >
+            
+        <Box>
+          <AddUser />
+        </Box>
+    
         <DataGrid
-          sx={{ color: "white" }}
+          sx={{ color: "#c7c7c8" }}
           className="table-background"
           columns={[
             {

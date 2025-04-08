@@ -5,9 +5,18 @@
   text-align: center;
 }
 
+body {
+  background-color: #191919;
+}
+
 .table-background {
   background-color: #28282a;
 }
+
+.font-color {
+  color: #ffffff;
+}
+
 
 
 
