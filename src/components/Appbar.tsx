@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 const pages = ['Home', 'Users'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Layout() {
+function appBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -104,7 +104,7 @@ function Layout() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           
               <Button
-                onClick={() => navigate('/home')}
+                onClick={() => navigate('/')}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Home
@@ -162,4 +162,4 @@ function Layout() {
   </Box>
   );
 }
-export default Layout;
+export default appBar;
