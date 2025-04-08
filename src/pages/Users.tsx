@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAppSelector } from "../store"
+
+
 
 type User = {
   first_name: string;
@@ -7,19 +10,19 @@ type User = {
   email: string;
 };
 
+
 export default function Users() {
+
+const apiUrl = useAppSelector((state) => state.api.apiUrl);
 
 const [users, setUsers] = useState<User[]>([]);
 
 const fetchUsers = async () => {
-  console.log('Fetching users in frontend..!.');
-  axios.get('http://localhost:8080/users')
+  axios.get(`${apiUrl}/users`)
     .then((response) => {
-      console.log ('RESPONSE:', response);
       setUsers(response.data);
     })
     .catch((error) => {
-      console.log("ERROR")
       console.error('Error fetching users:', error);
     });
 };

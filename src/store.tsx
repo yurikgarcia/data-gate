@@ -1,10 +1,12 @@
 import { configureStore} from "@reduxjs/toolkit"
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux"
 import helloReducer from './slices/helloSlice'
+import apiReducer from './slices/apiSlice'
 
 export const store = configureStore({
   reducer: {
-    hello: helloReducer
+    hello: helloReducer,
+    api: apiReducer
   },
 })
 
