@@ -26,7 +26,6 @@ export default function Users() {
     try {
       const response = await axios.get<User[]>(`${apiUrl}/users`);
       setUsers(response.data);
-      console.log("users", response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
