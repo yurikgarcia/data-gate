@@ -59,7 +59,7 @@ export default function Users() {
       >
             
         <Box>
-          <AddUser />
+          <AddUser onUserCreated={fetchUsers} />
         </Box>
     
         <DataGrid

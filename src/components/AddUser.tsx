@@ -21,14 +21,9 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAppSelector } from "../store";
 
-// === Types ===
-interface NewUer {
-  firstName: string;
-  lastName: string;
-  email: string;
-  organization: string;
-  password: string;
-  confirmPassword: string;
+// === Interfaces ===
+interface AddUserProps {
+  onUserCreated: () => void;
 }
 
 // === Styles ===
@@ -62,7 +57,7 @@ const inputStyle = {
 
 const orgOptions = ["SpaceX", "SIO", "1 ROPs", "Dunder Mifflin"];
 
-export default function addUser() {
+export default function addUser({ onUserCreated }: AddUserProps) {
   const apiUrl = useAppSelector((state) => state.api.apiUrl);
 
   // console.log("apiUrl from add user", apiUrl);
@@ -76,8 +71,6 @@ export default function addUser() {
     confirmPassword: "",
   });
 
-  
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -85,14 +78,11 @@ export default function addUser() {
     setNewUser((prev) => ({ ...prev, [field]: value }));
   };
 
-
-
-
   //password field
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const passwordMatch = newUser.password === newUser.confirmPassword
+  const passwordMatch = newUser.password === newUser.confirmPassword;
 
   const createNewUser = async (): Promise<void> => {
     console.log("Creating new user:", newUser);
@@ -100,17 +90,14 @@ export default function addUser() {
       const response = await axios.post(`${apiUrl}/newUser`, newUser);
       if (response.status >= 200 && response.status < 300) {
         console.log("User created:", response.data);
+        onUserCreated(); // Call the function passed as a prop to refresh the user list
         handleClose();
       }
     } catch (error) {
       console.error("Error creating user:", error);
-      alert("Something went wrong. Please try again")
+      alert("Something went wrong. Please try again");
     }
-  }
-
-
-  
-
+  };
 
   return (
     <>
@@ -200,7 +187,9 @@ export default function addUser() {
                 id="confirm-password"
                 type={showConfirmPassword ? "text" : "password"}
                 value={newUser.confirmPassword}
-                onChange={(e) => handleChange("confirmPassword", e.target.value)}
+                onChange={(e) =>
+                  handleChange("confirmPassword", e.target.value)
+                }
                 placeholder="Confirm Password"
                 sx={inputStyle}
                 endAdornment={
