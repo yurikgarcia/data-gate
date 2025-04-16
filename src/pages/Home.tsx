@@ -1,12 +1,22 @@
 import { useAppSelector } from "../store"
 
 
+
 export default function Homes() {
-  const message = useAppSelector(state => state.hello)
+
+  const user = useAppSelector(state => state.user.user)
+
+
   return (
     <div>
-      <p>Home Page!!!!</p>
-      {message}
+      <p>Welcome to the Home Page!!!!</p>
+      {user ? (
+        <>
+          <p>Email: {user.email}</p>
+        </>
+      ) : (
+        <p>No user logged in</p>
+      )}
     </div>
   )
 }

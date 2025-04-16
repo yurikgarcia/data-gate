@@ -9,20 +9,19 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../store";
-
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../slices/userSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-const apiUrl = useAppSelector((state) => state.api.apiUrl);
-
-
+  const apiUrl = useAppSelector((state) => state.api.apiUrl);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  console.log("apiUrl from func", apiUrl);
+    console.log("apiUrl from func", apiUrl);
     try {
       const response = await fetch(`${apiUrl}/login`, {
         method: "POST",
@@ -34,17 +33,17 @@ const apiUrl = useAppSelector((state) => state.api.apiUrl);
           password,
         }),
       });
-  
-  if (!response.ok) {
-    throw new Error("Login failed");
-  }
-  const data = await response.json();
-  console.log("Login successful:", data);
-  // TODO: Store token / user info in state or Redux
-  // navigate("/"); // Redirect to home page
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+      // const data = await response.json();
+      // console.log("Login successful:", data);
+      const { token, user } = await response.json();
+      dispatch(setUser({ token, user }))
+      navigate("/"); // Redirect to home page
     } catch (error) {
       console.error("Error during login:", error);
-      // TODO: Show error to user
     }
   };
 
