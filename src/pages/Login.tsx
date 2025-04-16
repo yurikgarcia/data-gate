@@ -8,18 +8,44 @@ import {
   Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../store";
+
 
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+const apiUrl = useAppSelector((state) => state.api.apiUrl);
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Logging in with:", { email, password });
-    navigate("/"); // Redirect to home after login
-    // TODO: Hook into auth system here (Supabase, API call, etc.)
+  console.log("apiUrl from func", apiUrl);
+    try {
+      const response = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+  
+  if (!response.ok) {
+    throw new Error("Login failed");
+  }
+  const data = await response.json();
+  console.log("Login successful:", data);
+  // TODO: Store token / user info in state or Redux
+  // navigate("/"); // Redirect to home page
+    } catch (error) {
+      console.error("Error during login:", error);
+      // TODO: Show error to user
+    }
   };
 
   const navigate = useNavigate();

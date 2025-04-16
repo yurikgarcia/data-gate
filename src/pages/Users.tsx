@@ -35,8 +35,7 @@ export default function Users() {
     fetchUsers();
   }, []);
 
-  //import addUser 
-
+  //import addUser
 
   return (
     <Box
@@ -47,7 +46,6 @@ export default function Users() {
         height: "75vh",
       }}
     >
-  
       <Box
         sx={{
           height: "70vh",
@@ -57,11 +55,10 @@ export default function Users() {
           },
         }}
       >
-            
         <Box>
           <AddUser onUserCreated={fetchUsers} />
         </Box>
-    
+
         <DataGrid
           sx={{ color: "#c7c7c8" }}
           className="table-background"

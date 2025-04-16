@@ -111,6 +111,7 @@ export default function addUser({ onUserCreated }: AddUserProps) {
           </Typography>
           <Stack spacing={2}>
             <TextField
+              required
               label="First Name"
               value={newUser.firstName}
               onChange={(e) => handleChange("firstName", e.target.value)}
@@ -118,6 +119,7 @@ export default function addUser({ onUserCreated }: AddUserProps) {
               sx={inputStyle}
             />
             <TextField
+              required
               label="Last Name"
               value={newUser.lastName}
               onChange={(e) => handleChange("lastName", e.target.value)}
@@ -125,6 +127,7 @@ export default function addUser({ onUserCreated }: AddUserProps) {
               sx={inputStyle}
             />
             <TextField
+              required
               label="Email"
               value={newUser.email}
               onChange={(e) => handleChange("email", e.target.value)}
