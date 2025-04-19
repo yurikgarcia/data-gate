@@ -15,7 +15,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 const pages = ["Home", "Users"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function appBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -42,7 +41,10 @@ function appBar() {
 
   const navigate = useNavigate();
 
-  const avatarIcon = localStorage.getItem("user_firstName")?.charAt(0).toUpperCase();
+  const avatarIcon = localStorage
+    .getItem("user_firstName")
+    ?.charAt(0)
+    .toUpperCase();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -129,9 +131,7 @@ function appBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar>
-                    {avatarIcon}
-                  </Avatar>
+                  <Avatar>{avatarIcon}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -150,13 +150,14 @@ function appBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: "center" }}>
-                      {setting}
-                    </Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={() => {
+                    localStorage.clear();
+                    navigate("/login");
+                  }}
+                >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

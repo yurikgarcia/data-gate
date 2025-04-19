@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAppSelector } from "../store";
+import { Form } from "react-router-dom";
 
 // === Interfaces ===
 interface AddUserProps {
@@ -74,6 +75,31 @@ export default function addUser({ onUserCreated }: AddUserProps) {
 
   const [newUser, setNewUser] = useState(initialNewUser)
 
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    organization: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+const handleErrors = () => {
+  const newErrors = {
+    firstName: newUser.firstName.trim() === "",
+    lastName: newUser.lastName.trim() === "",
+    email: newUser.email.trim() === "",
+    organization: newUser.organization.trim() === "",
+    password: newUser.password.trim() === "",
+    confirmPassword: newUser.confirmPassword.trim() === "" || newUser.password !== newUser.confirmPassword,
+  };
+  setErrors(newErrors);
+  const hasErrors = Object.values(newErrors).some(Boolean);
+  if (!hasErrors) { 
+    createNewUser();
+  }
+}
+
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -119,6 +145,8 @@ export default function addUser({ onUserCreated }: AddUserProps) {
               value={newUser.firstName}
               onChange={(e) => handleChange("firstName", e.target.value)}
               fullWidth
+              error={errors.firstName}
+              helperText={errors.firstName ? "First name is required" : ""}
               sx={inputStyle}
             />
             <TextField
@@ -127,6 +155,8 @@ export default function addUser({ onUserCreated }: AddUserProps) {
               value={newUser.lastName}
               onChange={(e) => handleChange("lastName", e.target.value)}
               fullWidth
+              error={errors.lastName}
+              helperText={errors.lastName ? "Last name is required" : ""}
               sx={inputStyle}
             />
             <TextField
@@ -135,6 +165,8 @@ export default function addUser({ onUserCreated }: AddUserProps) {
               value={newUser.email}
               onChange={(e) => handleChange("email", e.target.value)}
               fullWidth
+              error={errors.email}
+              helperText={errors.email ? "Email is required" : ""}
               sx={inputStyle}
             />
             <FormControl fullWidth>
@@ -158,6 +190,11 @@ export default function addUser({ onUserCreated }: AddUserProps) {
                   </MenuItem>
                 ))}
               </Select>
+              {errors.organization && (
+                <FormHelperText sx={{ color: "red" }}>
+                  <FormHelperText>Organization is required</FormHelperText>
+                </FormHelperText>
+              )}
             </FormControl>
 
             <Divider>
@@ -173,6 +210,7 @@ export default function addUser({ onUserCreated }: AddUserProps) {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 value={newUser.password}
+                error={errors.password}
                 onChange={(e) => handleChange("password", e.target.value)}
                 placeholder="Password"
                 sx={inputStyle}
@@ -213,12 +251,14 @@ export default function addUser({ onUserCreated }: AddUserProps) {
               />
               {!passwordMatch && (
                 <FormHelperText sx={{ color: "red" }}>
-                  Passwords do not match.
+                  {errors.confirmPassword 
+                    ? "Confirm password is required"
+                    : "Passwords do not match"}
                 </FormHelperText>
               )}
             </FormControl>
 
-            <Button variant="contained" onClick={createNewUser}>
+            <Button variant="contained" onClick={handleErrors}>
               Submit
             </Button>
           </Stack>
