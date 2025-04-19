@@ -36,10 +36,15 @@ export default function Login() {
         throw new Error("Login failed");
       }
       const { token, user } = await response.json();
-      console.log("USer", user)
       localStorage.setItem("token", token)
       localStorage.setItem("user_id", user.id)
       localStorage.setItem("user_email", user.email)
+      localStorage.setItem("user_firstName", user.first_name)
+      localStorage.setItem("user_lastName", user.last_name)
+      localStorage.setItem("user_organization", user.organization)
+      localStorage.setItem("user_role_admin", user.roles_admin)
+      localStorage.setItem("user_role_edit", user.roles_edit)
+      localStorage.setItem("user_role_view", user.roles_view)
       navigate("/"); 
     } catch (error) {
       console.error("Error during login:", error);
