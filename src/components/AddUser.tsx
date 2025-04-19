@@ -62,14 +62,18 @@ export default function addUser({ onUserCreated }: AddUserProps) {
 
   // console.log("apiUrl from add user", apiUrl);
   const [open, setOpen] = useState(false);
-  const [newUser, setNewUser] = useState({
+
+  const initialNewUser = {
     firstName: "",
     lastName: "",
     email: "",
     organization: "",
     password: "",
     confirmPassword: "",
-  });
+  };
+
+  const [newUser, setNewUser] = useState(initialNewUser)
+
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -85,11 +89,11 @@ export default function addUser({ onUserCreated }: AddUserProps) {
   const passwordMatch = newUser.password === newUser.confirmPassword;
 
   const createNewUser = async (): Promise<void> => {
-    console.log("Creating new user:", newUser);
     try {
       const response = await axios.post(`${apiUrl}/newUser`, newUser);
       if (response.status >= 200 && response.status < 300) {
-        onUserCreated(); // Call the function passed as a prop to refresh the user list
+        onUserCreated(); 
+        setNewUser(initialNewUser); 
         handleClose();
       }
     } catch (error) {
