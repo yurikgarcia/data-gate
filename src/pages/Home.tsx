@@ -3,7 +3,6 @@
 
 
 export default function Homes() {
-console.log("Home page loaded", localStorage);
 
   return (
     <div>
