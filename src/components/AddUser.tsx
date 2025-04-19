@@ -89,7 +89,6 @@ export default function addUser({ onUserCreated }: AddUserProps) {
     try {
       const response = await axios.post(`${apiUrl}/newUser`, newUser);
       if (response.status >= 200 && response.status < 300) {
-        console.log("User created:", response.data);
         onUserCreated(); // Call the function passed as a prop to refresh the user list
         handleClose();
       }
